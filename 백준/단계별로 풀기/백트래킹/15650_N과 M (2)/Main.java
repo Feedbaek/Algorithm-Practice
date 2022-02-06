@@ -12,7 +12,6 @@ public class Main {
 			bw.newLine();
 			return ;
 		}
-
 		for (int i=prev + 1; i<n; i++) {
 			Boolean flag = true;
 			for (int j=0; j<dept; j++)
