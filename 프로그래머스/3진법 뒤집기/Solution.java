@@ -7,6 +7,10 @@ class Solution {
 			three = (three * 10) + (n % 3);
 			n /= 3;
 		}
+		//while (three > 0) {
+
+		//}
+		System.out.println(three);
 		StringBuilder sb = new StringBuilder(String.valueOf(three));
 		three = Long.parseLong(sb.reverse().toString());
 		while (three > 0) {
