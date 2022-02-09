@@ -26,7 +26,4 @@ class Solution {
 
 		return answer;
 	}
-	class Stage implements Comparable<Stage> {
-
-	}
 }
