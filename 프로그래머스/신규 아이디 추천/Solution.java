@@ -20,12 +20,12 @@ class Solution {
 		}
 		if (sb.length() == 0)
 			sb.append("a");
+		if (sb.charAt(0) == '.')
+			sb.deleteCharAt(0);
 		s = sb.toString();
 		if (sb.length() >= 16)
 			s = sb.substring(0, 15);
 		StringBuilder answer = new StringBuilder(s);
-		if (answer.charAt(0) == '.')
-			answer.deleteCharAt(0);
 		if (answer.length()>0 && answer.charAt(answer.length()-1) == '.')
 			answer.deleteCharAt(answer.length()-1);
 		if (answer.length() == 0)
