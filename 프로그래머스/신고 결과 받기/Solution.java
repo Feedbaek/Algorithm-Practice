@@ -21,10 +21,8 @@ class Solution {
 			ArrayList<String> tmp = reportMap.get(id_list[i]);
 			if (tmp.size() < k)
 				continue ;
-			for (int j=0; j< tmp.size(); j++) {
-				int value = mailMap.get(tmp.get(j));
-				mailMap.put(tmp.get(j), value + 1);
-			}
+			for (int j=0; j< tmp.size(); j++)
+				mailMap.put(tmp.get(j), mailMap.get(tmp.get(j)) + 1);
 		}
 		for (int i=0; i<id_list.length; i++)
 			answer[i] = mailMap.get(id_list[i]);
