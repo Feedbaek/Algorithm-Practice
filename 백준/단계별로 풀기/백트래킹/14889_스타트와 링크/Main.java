@@ -4,7 +4,15 @@ public class Main {
 	static int min = -1;
 	static int[][] arr;
 
-	static void get_diff(int[] people, int[] start, int[] link) {
+	static boolean is_team(int[] team, int man) {
+		int len = team.length;
+		for (int i=0; i<len; i++)
+			if (team[i] == man)
+				return true;
+		return false;
+	}
+
+	static void get_diff(int[] people, int[] start) {
 		int start_sum = 0;
 		int link_sum = 0;
 
@@ -21,22 +29,21 @@ public class Main {
 		for (int i=0; i<len; i++)
 			for (int j=0; j<len; j++)
 				link_sum += arr[link[i]][link[j]];
-		int tmp = Math.abs(start_sum - link_sum);
-		if (min == -1 || tmp < min)
-			min = tmp;
+		if (min == -1 || Math.abs(start_sum - link_sum) < min)
+			min = Math.abs(start_sum - link_sum);
 	}
 
-	static void pick_team(int[] people, int[] start, int[] link, int n) {
+	static void pick_team(int[] people, int[] start, int n, int prev_idx) {
 		if (n == start.length) {
 			get_diff(people, start, link);
 			return ;
 		}
 		int len = people.length;
-		for (int i=0; i<len; i++)
+		for (int i=prev_idx+1; i<len-start.length+n+1; i++)
 			if (people[i] == 0) {
 				people[i] = 1;
 				start[n] = i;
-				pick_team(people, start, link, n+1);
+				pick_team(people, start, n+1, i);
 				people[i] = 0;
 			}
 	}
@@ -54,7 +61,7 @@ public class Main {
 			for (int j=0; j<n; j++)
 				arr[i][j] = Integer.valueOf(input[j]);
 		}
-		pick_team(people, start, link, 0);
+		pick_team(people, start, 0, 0);
 		bw.write(String.valueOf(min)+"\n");
 		bw.close();
 	}
