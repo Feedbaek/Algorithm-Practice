@@ -11,21 +11,21 @@ public class Main {
       int n = Integer.parseInt(br.readLine());
 
       for(int i=0; i<str.length(); i++)
-         list.InsertNode(str.charAt(i));
+         list.InsertNode(String.valueOf(str.charAt(i)));
 
       for(int i=0; i<n; i++){
-         String[] strs = br.readLine().split(" ");
-         if(strs[0].equals("L")){
+         String strs = br.readLine();
+         if(strs.charAt(0) == 'L'){
             list.ToLeft();
          }
-         else if(strs[0].equals("D")){
+         else if(strs.charAt(0) == 'D'){
             list.ToRight();
          }
-         else if(strs[0].equals("B")){
+         else if(strs.charAt(0) == 'B'){
             list.DeleteNode();
          }
-         else if(strs[0].equals("P")){
-            list.InsertNode(strs[1].charAt(0));
+         else if(strs.charAt(0) == 'P'){
+            list.InsertNode(String.valueOf(strs.charAt(2)));
          }
       }
 
@@ -35,13 +35,12 @@ public class Main {
 }
 
 class MyLinkedList{
-   Node headNode = null;
-   Node currentNode = null;
+   static Node headNode = null;
+   static Node currentNode = null;
 
-   void InsertNode(Character data){   // currentNode와 currentNode.nextNode 사이에 삽입
+   void InsertNode(String data){   // currentNode와 currentNode.nextNode 사이에 삽입
       if(headNode==null){
          Node newNode = new Node(data, null, null);
-
          headNode = newNode;
          currentNode = newNode;
       }
@@ -73,12 +72,6 @@ class MyLinkedList{
          currentNode.prevNode.nextNode = currentNode.nextNode;
       if(currentNode.nextNode != null)
          currentNode.nextNode.prevNode = currentNode.prevNode;
-
-      // if(currentNode.prevNode != null){
-      //    if(currentNode == headNode)
-      //       headNode = currentNode.prevNode;
-      // }
-      // else{
       if(currentNode == headNode)
          headNode = currentNode.nextNode;
       currentNode = currentNode.prevNode;
@@ -103,7 +96,7 @@ class MyLinkedList{
       Node tempNode = headNode;
 
       while(tempNode != null){
-         bw.write(Character.toString(tempNode.data));
+         bw.write(tempNode.data);
          tempNode = tempNode.nextNode;
       }
       bw.close();
@@ -111,11 +104,11 @@ class MyLinkedList{
 }
 
 class Node{
-   Character data = null;
+   String data = null;
    Node nextNode = null;
    Node prevNode = null;
 
-   Node(Character data, Node prevNode, Node nextNode){
+   Node(String data, Node prevNode, Node nextNode){
       this.data = data;
       this.prevNode = prevNode;
       this.nextNode = nextNode;
