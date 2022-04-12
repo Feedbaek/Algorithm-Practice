@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 09:56:50 by minskim2          #+#    #+#             */
-/*   Updated: 2022/04/07 09:20:03 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/04/12 08:26:41 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	main(void) {
 	for (char c:str) {
 		if (c == ')') {
 			if (!v.empty() && v.back()=='(') {
-				//prev = 0;
-				//if (!ret.empty()) {
-				//	prev = ret.back();
-				//	ret.pop_back();
-				//}
-				//ret.push_back(prev+2);
+				prev = 0;
+				if (!ret.empty()) {
+					prev = ret.back();
+					ret.pop_back();
+				}
+				ret.push_back(prev+2);
 			}
 			else if (!v.empty() && (v.back()==')' || v.back()==']')) {
 				prev = 1;
@@ -53,12 +53,12 @@ int	main(void) {
 		}
 		else if (c == ']') {
 			if (!v.empty() && v.back()=='[') {
-				//prev = 0;
-				//if (!ret.empty()) {
-				//	prev = ret.back();
-				//	ret.pop_back();
-				//}
-				//ret.push_back(prev+3);
+				prev = 0;
+				if (!ret.empty()) {
+					prev = ret.back();
+					ret.pop_back();
+				}
+				ret.push_back(prev+3);
 			}
 			else if (!v.empty() && (v.back()==']' || v.back()==')')) {
 				prev = 1;
