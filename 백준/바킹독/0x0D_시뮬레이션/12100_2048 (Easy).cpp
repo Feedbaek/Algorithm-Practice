@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 11:07:04 by minskim2          #+#    #+#             */
-/*   Updated: 2022/05/21 18:49:12 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/05/21 22:35:34 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <algorithm>
 using namespace std;
 
-int map[20][20];
+int arr[21][21];
 int n, big_block;
 
-void	pull_up_map(int arr[][20]) {
+void	pull_up_map() {
 	for (int j=0; j<n; j++)
 		for (int i=0; i<n; i++)
 			if (arr[i][j] == 0)
@@ -29,7 +29,7 @@ void	pull_up_map(int arr[][20]) {
 					}
 }
 
-void	pull_down_map(int arr[][20]) {
+void	pull_down_map() {
 	for (int j=0; j<n; j++)
 		for (int i=n-1; i>=0; i--)
 			if (arr[i][j] == 0)
@@ -41,23 +41,24 @@ void	pull_down_map(int arr[][20]) {
 					}
 }
 
-void	pull_left_map(int arr[][20]) {
+void	pull_left_map() {
 	for (int i=0; i<n; i++)
 		for (int j=0; j<n; j++)
 			if (arr[i][j] == 0)
-				for (int k=j; k<n; k++)
+				for (int k=j+1; k<n; k++)
 					if (arr[i][k] != 0) {
 						arr[i][j] = arr[i][k];
 						arr[i][k] = 0;
 						break;
 					}
+
 }
 
-void	pull_right_map(int arr[][20]) {
+void	pull_right_map() {
 	for (int i=0; i<n; i++)
-		for (int j=n-1; j>=n; j--)
+		for (int j=n-1; j>=0; j--)
 			if (arr[i][j] == 0)
-				for (int k=j; k>=0; k--)
+				for (int k=j-1; k>=0; k--)
 					if (arr[i][k] != 0) {
 						arr[i][j] = arr[i][k];
 						arr[i][k] = 0;
@@ -65,126 +66,105 @@ void	pull_right_map(int arr[][20]) {
 					}
 }
 
-void	sum_up_block(int arr[][20]) {
-	for (int j=0; j<n; j++) {
-		for (int i=0; i<n-1; i++) {
+void	sum_up_block() {
+	for (int j=0; j<n; j++)
+		for (int i=0; i<n-1; i++)
 			if (arr[i][j] != 0 && arr[i][j] == arr[i+1][j]) {
 				arr[i][j] *= 2;
 				arr[i+1][j] = 0;
-				for (int k=i+1; k<n-1; k++) {
+				for (int k=i+1; k<n-1&&arr[k+1][j]!=0; k++) {
 					arr[k][j] = arr[k+1][j];
 					arr[k+1][j] = 0;
 				}
 			}
-		}
-	}
 }
 
-void	sum_down_block(int arr[][20]) {
-	for (int j=0; j<n; j++) {
-		for (int i=n-1; i>0; i--) {
+void	sum_down_block() {
+	for (int j=0; j<n; j++)
+		for (int i=n-1; i>0; i--)
 			if (arr[i][j] != 0 && arr[i][j] == arr[i-1][j]) {
 				arr[i][j] *= 2;
 				arr[i-1][j] = 0;
-				for (int k=i-1; k>0; k--) {
+				for (int k=i-1; k>0&&arr[k-1][j]!=0; k--) {
 					arr[k][j] = arr[k-1][j];
 					arr[k-1][j] = 0;
 				}
 			}
-		}
-	}
 }
 
-void	sum_left_block(int arr[][20]) {
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n-1; j++) {
+void	sum_left_block() {
+	for (int i=0; i<n; i++)
+		for (int j=0; j<n-1; j++)
 			if (arr[i][j] != 0 && arr[i][j] == arr[i][j+1]) {
 				arr[i][j] *= 2;
 				arr[i][j+1] = 0;
-				for (int k=j+1; k<n-1; k++) {
+				for (int k=j+1; k<n-1&&arr[i][k+1]!=0; k++) {
 					arr[i][k] = arr[i][k+1];
 					arr[i][k+1] = 0;
 				}
 			}
-		}
-	}
+
 }
 
-void	sum_right_block(int arr[][20]) {
-	for (int i=0; i<n; i++) {
-		for (int j=n-1; j>=0; j--) {
+void	sum_right_block() {
+	for (int i=0; i<n; i++)
+		for (int j=n-1; j>0; j--)
 			if (arr[i][j] != 0 && arr[i][j] == arr[i][j-1]) {
 				arr[i][j] *= 2;
 				arr[i][j-1] = 0;
-				for (int k=j-1; k>0; k--) {
+				for (int k=j-1; k>0&&arr[i][k-1]!=0; k--) {
 					arr[i][k] = arr[i][k-1];
 					arr[i][k-1] = 0;
 				}
 			}
-		}
-	}
 }
 
-void	move_up(int arr[][20]) {
-	pull_up_map(arr);
-	sum_up_block(arr);
+void	move_up() {
+	pull_up_map();
+	sum_up_block();
 }
 
-void	move_down(int arr[][20]) {
-	pull_down_map(arr);
-	sum_down_block(arr);
+void	move_down() {
+	pull_down_map();
+	sum_down_block();
 }
 
-void	move_left(int arr[][20]) {
-	pull_left_map(arr);
-	sum_left_block(arr);
+void	move_left() {
+	pull_left_map();
+	sum_left_block();
 }
 
-void	move_right(int arr[][20]) {
-	pull_right_map(arr);
-	sum_right_block(arr);
+void	move_right() {
+	pull_right_map();
+	sum_right_block();
 }
 
-void	print_map(int arr[][20]) {
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			cout << arr[i][j] <<" ";
-		}
-		cout << "\n";
-	}
-	cout << "\n";
-}
-
-void	check_map(int arr[][20]) {
-	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) {
-			if (arr[i][j] > big_block) {
+void	check_map() {
+	for (int i=0; i<n; i++)
+		for (int j=0; j<n; j++)
+			if (arr[i][j] > big_block)
 				big_block = arr[i][j];
-				//print_map(arr);
-			}
-		}
-	}
 }
 
-void	rec(int dept, int arr[][20]) {
+void	rec(int dept) {
 	if (dept == 5) {
-		check_map(arr);
+		check_map();
 		return ;
 	}
-	int tmp[20][20];
-	//cout << "==== " << dept << " ====\n";
-	copy(&arr[0][0], &arr[0][0]+400, &tmp[0][0]);
-	move_up(tmp);
-	rec(dept+1, tmp);
-	copy(&arr[0][0], &arr[0][0]+400, &tmp[0][0]);
-	move_down(tmp);
-	rec(dept+1,tmp);
-	copy(&arr[0][0], &arr[0][0]+400, &tmp[0][0]);
-	move_left(tmp);
-	rec(dept+1,tmp);
-	copy(&arr[0][0], &arr[0][0]+400, &tmp[0][0]);
-	move_right(tmp);
-	rec(dept+1,tmp);
+	int tmp[21][21];
+	copy(&arr[0][0], &arr[0][0]+21*21, &tmp[0][0]);
+	move_up();
+	rec(dept+1);
+	copy(&tmp[0][0], &tmp[0][0]+21*21, &arr[0][0]);
+	move_down();
+	rec(dept+1);
+	copy(&tmp[0][0], &tmp[0][0]+21*21, &arr[0][0]);
+	move_left();
+	rec(dept+1);
+	copy(&tmp[0][0], &tmp[0][0]+21*21, &arr[0][0]);
+	move_right();
+	rec(dept+1);
+	copy(&tmp[0][0], &tmp[0][0]+21*21, &arr[0][0]);
 }
 
 int	main() {
@@ -193,8 +173,8 @@ int	main() {
 	cin >> n;
 	for (int i=0; i<n; i++)
 		for (int j=0; j<n; j++)
-			cin >> map[i][j];
-	rec(0, map);
+			cin >> arr[i][j];
+	rec(0);
 	cout << big_block;
 	return 0;
 }
