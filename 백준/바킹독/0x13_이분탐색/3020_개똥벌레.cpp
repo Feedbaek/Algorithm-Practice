@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 21:04:07 by minskim2          #+#    #+#             */
-/*   Updated: 2022/05/22 22:20:32 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:28:51 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ bool check_n(int mid) {
 	int cnt = 0;
 	bool fg = false;
 	int ret = 0;
-	for (int j=0; j<h; j++) {
+	for (int j=1; j<=h; j++) {
 		cnt = 0;
 		for (int i=0; i<n; i++) {
 			if (i % 2 == 0) {
 				if (j <= v[i])
 					cnt++;
-			}
-			else {
+			} else {
 				if (j > h - v[i])
 					cnt++;
 			}
@@ -36,13 +35,13 @@ bool check_n(int mid) {
 				break;
 		}
 		if (cnt <= mid) {
-			if (cnt == mid)
-				ret++;
+			//ret++;
 			fg = true;
+			break;
 		}
 	}
-	if (fg)
-		ret_sum = ret;
+	//if (fg)
+	//	ret_sum = ret;
 	return fg;
 }
 
@@ -58,34 +57,13 @@ int main() {
 	int st = 0;
 	int en = n;
 	int mid;
-	while (st <= en) {
+	while (st < en) {
 		mid = (st+en+1) / 2;
-		if (check_n(mid)) {
+		if (check_n(mid))
 			en = mid - 1;
-		} else {
-			st = mid + 1;
-		}
+		else
+			st = mid;
 	}
-	en++;
-	//int cnt = 0;
-	//int ret = 0;
-	//for (int j=0; j<h; j++) {
-	//	cnt = 0;
-	//	for (int i=0; i<n; i++) {
-	//		if (i % 2 == 0) {
-	//			if (j <= v[i])
-	//				cnt++;
-	//		}
-	//		else {
-	//			if (j > h - v[i])
-	//				cnt++;
-	//		}
-	//		if (cnt > en)
-	//			break;
-	//	}
-	//	if (cnt == en)
-	//		ret++;
-	//}
-	cout << en << " " << ret_sum;
+	cout << ++en << " " << ret_sum;
 	return 0;
 }
