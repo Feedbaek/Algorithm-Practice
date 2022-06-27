@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 21:04:07 by minskim2          #+#    #+#             */
-/*   Updated: 2022/06/22 22:28:51 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:37:27 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,45 @@
 #include <vector>
 using namespace std;
 
-int n, h, ret_sum;
+int n, h, min_sum;
 vector<int> v;
+vector<int> ret_sum;
 
 bool check_n(int mid) {
+	if (mid >= min_sum)
+		return true;
 	int cnt = 0;
-	bool fg = false;
-	int ret = 0;
-	for (int j=1; j<=h; j++) {
+	for (int height=1; height<=h; height++) {
 		cnt = 0;
+		if (ret_sum[height - 1] != -1) {
+			if (ret_sum[height - 1] > mid)
+				continue;
+			return true;
+		}
 		for (int i=0; i<n; i++) {
 			if (i % 2 == 0) {
-				if (j <= v[i])
+				if (height <= v[i])
 					cnt++;
 			} else {
-				if (j > h - v[i])
+				if (height > h - v[i])
 					cnt++;
 			}
-			if (cnt > mid)
-				break;
 		}
-		if (cnt <= mid) {
-			//ret++;
-			fg = true;
-			break;
-		}
+		ret_sum[height - 1] = cnt;
+		if (cnt < min_sum)
+			min_sum = cnt;
+		if (cnt <= mid)
+			return true;
 	}
-	//if (fg)
-	//	ret_sum = ret;
-	return fg;
+	return false;
+}
+
+int find_ret() {
+	int cnt = 0;
+	for (int i=0; i<h; i++)
+		if (ret_sum[i] == min_sum)
+			cnt++;
+	return cnt;
 }
 
 int main() {
@@ -50,11 +60,14 @@ int main() {
 	cin.tie(0);
 	cin >> n >> h;
 	int x;
+	v.reserve(n);
+	ret_sum.resize(h, -1);
+	min_sum = n;
 	for (int i=0; i<n; i++) {
 		cin >> x;
 		v.push_back(x);
 	}
-	int st = 0;
+	int st = -1;
 	int en = n;
 	int mid;
 	while (st < en) {
@@ -64,6 +77,7 @@ int main() {
 		else
 			st = mid;
 	}
-	cout << ++en << " " << ret_sum;
+	x = find_ret();
+	cout << min_sum << " " << x;
 	return 0;
 }

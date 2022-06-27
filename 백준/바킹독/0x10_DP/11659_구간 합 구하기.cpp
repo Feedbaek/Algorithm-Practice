@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1463_1로 만들기.cpp                                    :+:      :+:    :+:   */
+/*   11659_구간 합 구하기.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/19 15:48:34 by minskim2          #+#    #+#             */
-/*   Updated: 2022/06/27 11:04:25 by minskim2         ###   ########.fr       */
+/*   Created: 2022/06/27 10:05:24 by minskim2          #+#    #+#             */
+/*   Updated: 2022/06/27 10:48:49 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <algorithm>
 using namespace std;
-
-int v[1000001];
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	int n;
-	cin >> n;
-	for (int i=2; i<=n; i++) {
-		v[i] = v[i - 1] + 1;
-		if (i % 3 == 0)
-			v[i] = min(v[i], v[i / 3] + 1);
-		if (i % 2 == 0)
-			v[i] = min(v[i], v[i / 2] + 1);
+	int arr[100000];
+	int n, m, i, j, ret;
+	cin >> n >> m;
+	cin >> arr[0];
+	for (int k=1; k<n; k++) {
+		cin >> arr[k];
+		arr[k] += arr[k-1];
 	}
-	cout << v[n];
+	for (int k=0; k<m; k++) {
+		cin >> i >> j;
+		ret = arr[j-1];
+		if (i >= 2)
+			ret -= arr[i-2];
+		cout << ret << '\n';
+	}
 }
