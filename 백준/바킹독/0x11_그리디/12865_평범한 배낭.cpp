@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:05:42 by minskim2          #+#    #+#             */
-/*   Updated: 2022/07/09 22:38:25 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:08:48 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,23 @@
 using namespace std;
 
 pair<int,int> arr[100];
-int sum[100001];
+int sum[101][100001];
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	int n, k;
 	cin >> n >> k;
-	for (int i=0; i<n; i++)
+	for (int i=1; i<=n; i++)
 		cin >> arr[i].first >> arr[i].second;
-	sort(arr, arr+n);
-	for (int i=0; i<n; i++)
-		cout << i+1 <<" : " << arr[i].first << " " << arr[i].second << "\n";
-	cout << " ============= \n";
-	//for (int w=1, i=0; w<=k; w++) {
-	//	sum[w] = sum[w-1];
-	//	if (i == n || w - arr[i].first < 0) {
-	//		continue;;
-	//	}
-	//	sum[w] = max(sum[w], sum[w - arr[i].first] + arr[i].second);
-	//	i++;
-	//	//cout << w <<" : "<< sum[w] << "\n";
-	//}
-	for (int w=1; w<=k; w++) {
-		for (int i=0; i<n; i++) {
-			if (w < arr[i].first)
-				break;
-			if (w - arr[i].first < arr[i].first)
-				sum[w] = max(sum[w], sum[w - arr[i].first] + arr[i].second);
+
+	for (int i=1; i<=n; i++) {
+		for (int j=1; j<=k; j++) {
+			if (j - arr[i].first < 0)
+				sum[i][j] = sum[i-1][j];
+			else
+				sum[i][j] = max(sum[i-1][j], sum[i-1][j-arr[i].first] + arr[i].second);
 		}
 	}
-	for (int i=0; i<=k; i++) {
-		cout << i <<" : " << sum[i] << "\n";
-	}
+	cout << sum[n][k] ;
 }
