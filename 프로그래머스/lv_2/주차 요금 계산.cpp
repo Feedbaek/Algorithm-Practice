@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 11:51:03 by minskim2          #+#    #+#             */
-/*   Updated: 2022/08/09 14:28:40 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/08/09 14:29:29 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ vector<int> solution(vector<int> fees, vector<string> records) {
 		car_num = stoi(rec[1]);
 		if (rec[2] == "IN") {
 			car_in[car_num] = m_time;
-			//if (total.find(car_num) == total.end())
-			//	total[car_num] = 0;
 		} else {
 			total[car_num] = total[car_num] + m_time - car_in[car_num];
 			car_in.erase(car_num);
