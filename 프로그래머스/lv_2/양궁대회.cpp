@@ -6,50 +6,67 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:20:27 by minskim2          #+#    #+#             */
-/*   Updated: 2022/08/16 13:01:01 by minskim2         ###   ########.fr       */
+/*   Updated: 2022/08/16 21:13:28 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
 #include <vector>
-#include <utility>
-#include <algorithm>
-#include <iostream>
-
 using namespace std;
 
-bool compare(pair<double, int>& a, pair<double, int>& b) {
-	return a.first > b.first;
+int diff_max = 0;
+vector<int> diff_v;
+
+int get_scorecmp(vector<int>& info, vector<int>& answer) {
+	int score = 0, cmp_score = 0;
+	for (int i=0; i<11; ++i) {
+		if (info[i] != 0) {
+			cmp_score += 10 - i;
+			if (info[i] < answer[i]) {
+				cmp_score -= 10 - i;
+				score += 10 - i;
+			}
+		} else if (answer[i] != 0)
+			score += 10 - i;
+	}
+	return score - cmp_score;
+}
+
+void check_diff_v(vector<int>& answer) {
+	for (int i=10; i>=0; --i) {
+		if (answer[i] > diff_v[i]) {
+			diff_v = answer;
+			return ;
+		} else if (answer[i] < diff_v[i])
+			return ;
+	}
+}
+
+void dfs(int dept, int n, vector<int>& info, vector<int>& answer) {
+	if (n == 0 || dept == 11) {
+		if (n != 0)
+			answer[10] += n;
+		int diff = get_scorecmp(info, answer);
+		if (diff > diff_max) {
+			diff_max = diff;
+			diff_v = answer;
+		} else if (diff == diff_max)
+			check_diff_v(answer);
+		return ;
+	}
+	dfs(dept+1, n, info, answer);
+	if (n > info[dept]) {
+		answer[dept] = info[dept] + 1;
+		dfs(dept+1, n-info[dept]-1, info, answer);
+	}
+	answer[dept] = 0;
 }
 
 vector<int> solution(int n, vector<int> info) {
 	vector<int> answer;
-	vector<pair<double, int> > eff;
-	int cmp_score = 0, arrow = n, score = 0;
-	eff.reserve(11);
 	answer.resize(11);
-	for (int i=0; i<11; ++i) {
-		if (info[i] == 0) {
-			cmp_score += 10 - i;
-			eff[i] = {(10 - i), i};
-		} else {
-			eff[i] = {2 * (10 - i) / ((double)info[i]+1), i};
-		}
-	}
-	sort(&eff[0], &eff[0] + 11, compare);
-	for (int i=0; i<11; ++i) {
-		if (arrow <= 0)
-			break;
-		if (arrow < info[eff[i].second]+1)
-			continue;
-		arrow -= info[eff[i].second]+1;
-		score += 10 - eff[i].second;
-		cmp_score -= 10 - eff[i].second;
-		answer[eff[i].second] = info[eff[i].second]+1;
-	}
-	if (arrow != 0)
-		answer[10] += arrow;
-	if (score > cmp_score)
-		return answer;
-	return {-1};
+	diff_v.resize(11);
+	dfs(0, n, info, answer);
+	if (diff_max == 0)
+		return {-1};
+	return diff_v;
 }
