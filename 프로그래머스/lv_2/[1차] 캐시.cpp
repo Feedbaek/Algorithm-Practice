@@ -2,7 +2,6 @@
 #include <cstring>
 #include <vector>
 #include <list>
-#include <algorithm>
 using namespace std;
 
 int solution(int cacheSize, vector<string> cities) {
