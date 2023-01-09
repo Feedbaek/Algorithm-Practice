@@ -6,7 +6,7 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:12:45 by minskim2          #+#    #+#             */
-/*   Updated: 2023/01/09 11:12:46 by minskim2         ###   ########.fr       */
+/*   Updated: 2023/01/09 11:15:21 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ using namespace std;
 
 pair<string, int> pasrsing_head(string f) {
 	string head = "";
-	int idx;
+	int idx = 0;
 
 	for (idx=0; idx<f.size(); ++idx) {
 		if (f[idx] >= 'A' && f[idx] <= 'Z')
@@ -34,7 +34,7 @@ pair<string, int> pasrsing_head(string f) {
 
 int pasrsing_number(string f) {
 	int number = 0;
-	int idx;
+	int idx = 0;
 
 	for (idx=0; idx<f.size() && idx < 5; ++idx) {
 		if (f[idx] < '0' || f[idx] > '9')
