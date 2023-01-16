@@ -12,14 +12,12 @@ vector<string> solution(vector<string> orders, vector<int> course) {
 			uni[j] = 1;
 		}
 		int _max = 0;
-		for (int o=0; o<orders.size(); ++o) {
-			if (orders[o].size() < course[i])
-				continue;
+		do {
 			int cnt = 0;
-			do {
+			for (int k=0; k<orders.size(); ++k) {
 				int com[26] = {};
-				for (int l=0; l<orders[o].size(); ++l) {
-					com[orders[o][l] - 'A'] = 1;
+				for (int l=0; l<orders[k].size(); ++l) {
+					com[orders[k][l] - 'A'] = 1;
 				}
 				bool flag = true;
 				for (int l=0; l<26; ++l) {
@@ -30,21 +28,21 @@ vector<string> solution(vector<string> orders, vector<int> course) {
 				}
 				if (flag)
 					++cnt;
-				if (cnt >= _max && cnt > 1) {
-					string tmp = "";
-					for (int l=0; l<26; ++l) {
-						if (uni[l] == 1)
-							tmp.push_back('A' + l);
-					}
-					if (_max != 0 && cnt > _max) {
-						while (answer.back().size() == tmp.size())
-							answer.pop_back();
-					}
-					answer.push_back(tmp);
-					_max = cnt;
+			}
+			if (cnt >= _max && cnt > 1) {
+				string tmp = "";
+				for (int l=0; l<26; ++l) {
+					if (uni[l] == 1)
+						tmp.push_back('A' + l);
 				}
-			} while (prev_permutation(uni, uni + orders[o].size()));
-		}
+				if (_max != 0 && cnt > _max) {
+					while (answer.back().size() == tmp.size())
+						answer.pop_back();
+				}
+				answer.push_back(tmp);
+				_max = cnt;
+			}
+		} while (prev_permutation(uni, uni + 26));
 	}
 	sort(answer.begin(), answer.end());
 	return answer;
