@@ -6,12 +6,11 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 00:32:43 by minskim2          #+#    #+#             */
-/*   Updated: 2023/02/07 00:32:44 by minskim2         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:33:57 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
