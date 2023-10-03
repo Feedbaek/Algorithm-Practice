@@ -6,55 +6,43 @@
 /*   By: minskim2 <minskim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 11:15:16 by minskim2          #+#    #+#             */
-/*   Updated: 2022/08/28 12:43:25 by minskim2         ###   ########.fr       */
+/*   Updated: 2023/10/03 22:03:27 by minskim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
 #include <vector>
-#include <queue>
-#include <utility>
 #include <iostream>
 using namespace std;
 
-void A_to_B(vector<int>& A, vector<int>& B) {
-	B.push_back(A.front());
-	A.erase(A.begin());
-}
-
-int get_sum(vector<int>& v) {
-	int sum = 0;
-	for (int i=0; i<v.size(); ++i)
-		sum += v[i];
-	return sum;
-}
-
 int solution(vector<int> queue1, vector<int> queue2) {
-	queue<pair<vector<int>, int>> a;
-	queue<pair<vector<int>, int>> b;
-	a.push({queue1, 0});
-	b.push({queue2, 0});
-	int sum_a = 0, sum_b = 0;
-	int cnt = 0;
-	while (cnt < 100000000) {
-		vector<int> tmp1 = a.front().first;
-		vector<int> tmp2 = b.front().first;
-		if (get_sum(tmp1) == get_sum(tmp2))
-			break;
-		int c = a.front().second;
-		A_to_B(tmp1, tmp2);
-		a.push({tmp1, c+1});
-		b.push({tmp2, c+1});
-		A_to_B(b.front().first, a.front().first);
-		a.push({a.front().first, c+1});
-		b.push({b.front().first, c+1});
-		a.pop();
-		b.pop();
-		++cnt;
+	long long total = 0;
+	long long sum = 0;
+	int answer = 0;
+	// 전체 합 구하기
+	vector<int> queue;
+	for (int i=0; i<queue1.size(); i++) {
+		queue.push_back(queue1[i]);
+		sum += queue1[i];
 	}
-	return a.front().second;
-}
-
-int main() {
-	cout << solution({1, 2, 1, 2}, {1, 10, 1, 2}) << "\n";
+	total = sum;
+	for (int i=0; i<queue2.size(); i++) {
+		queue.push_back(queue2[i]);
+		total += queue2[i];
+	}
+	// 두 큐의 합이 같아질 때까지 돌리기
+	int st = 0; // 큐1의 시작 인덱스
+	int en = queue1.size() - 1; // 큐2의 끝 인덱스
+	while (st < en && en < queue.size()) {
+		if (sum < total / 2)
+			sum += queue[++en];
+		else if (sum > total / 2)
+			sum -= queue[st++];
+		else
+			break;
+		answer++;
+	}
+	// 결과 반환
+	if (sum == total / 2)
+		return answer;
+	return -1;
 }
