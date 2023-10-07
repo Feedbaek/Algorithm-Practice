@@ -2,60 +2,30 @@
 #include <vector>
 
 using namespace std;
-
+// 유클리드 호제법
 int gcd(int a, int b) {
 	if (a % b == 0) return b;
 	else return gcd(b, a % b);
 }
 
 int solution(vector<int> arrayA, vector<int> arrayB) {
-	int gcd_numA, gcd_numB;
-
-	if (arrayA.size() > 1)
-		gcd_numA = gcd(arrayA[0], arrayA[1]);
-	else
-		gcd_numA = arrayA[0];
-	for (int i=2; i<arrayA.size(); i++) {
-		gcd_numA = gcd(gcd_numA, arrayA[i]);
+	int gcdA = arrayA[0], gcdB = arrayB[0];
+	// 최대공약수 구하기
+	for (int i=1; i<arrayA.size(); ++i) {
+		if (arrayA[i] % gcdA != 0)
+			gcdA = gcd(gcdA, arrayA[i]);
+		if (arrayB[i] % gcdB != 0)
+			gcdB = gcd(gcdB, arrayB[i]);
 	}
-
-	if (arrayB.size() > 1)
-		gcd_numB = gcd(arrayB[0], arrayB[1]);
-	else
-		gcd_numB = arrayB[0];
-	for (int i=2; i<arrayB.size(); i++) {
-		gcd_numB = gcd(gcd_numB, arrayB[i]);
+	// 최대공약수로 나누어지는지 확인해서 나누어지면 1로 바꾸기
+	for (int i=0; i<arrayA.size(); ++i) {
+		if (arrayA[i] % gcdB == 0)
+			gcdB = 1;
+		if (arrayB[i] % gcdA == 0)
+			gcdA = 1;
 	}
-
-	int m_a = gcd_numA, m_b = gcd_numB;
-
-	printf("%d %d\n", m_a, m_b);
-	bool flag = false;
-	while (m_a != 1 && m_b != 1 && !flag) {
-		for (int i=0; i<arrayA.size(); i++) {
-			if (arrayA[i] > m_b && arrayA[i] % m_b == 0)
-				break;
-			if (i == arrayA.size() - 1)
-				flag = true;
-		}
-		m_b /= 2;
-	}
-
-	flag = false;
-	while (m_a != 1 && m_b != 1 && !flag) {
-		for (int i=0; i<arrayB.size(); i++) {
-			if (arrayB[i] > m_a && arrayB[i] % m_a == 0)
-				break;
-			if (i == arrayB.size() - 1)
-				flag = true;
-		}
-		m_a /= 2;
-	}
-
-	printf("%d %d\n", m_a, m_b);
-
-	if (m_a == 1 && m_b == 1)
+	// 둘 다 1이면 0 반환
+	if (gcdA == 1 && gcdB == 1)
 		return 0;
-
-	return m_a > m_b ? m_a : m_b;
+	return gcdA > gcdB ? gcdA : gcdB;
 }
