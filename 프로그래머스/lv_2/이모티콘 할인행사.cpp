@@ -5,7 +5,6 @@
 using namespace std;
 
 int percent[4] = {40, 30, 20, 10};
-double sale[4] = {0.6, 0.7, 0.8, 0.9};
 int max_price = 0;
 int max_plus_cnt = 0;
 
@@ -16,31 +15,21 @@ void rec(vector<vector<int>> &users, vector<int> &emoticons, vector<double> &sal
 		for (int i=0; i<users.size(); ++i) {
 			int user_price = 0;
 			for (int j=0; j<emoticons.size(); ++j) {
-				if (users[i][0] <= sale_percent[j]) {
-					user_price += emoticons[j] * (sale_percent[j] / 100);
-					//cout << emoticons[j] * (sale_percent[j] / 100) << endl;
-				}
+				if (users[i][0] <= sale_percent[j])
+					user_price += emoticons[j] * ((100 - sale_percent[j]) / 100);
 			}
-			//cout << user_price << endl;
-			if (user_price > users[i][1])
+			if (user_price >= users[i][1])
 				++plus_cnt;
-			else {
-
+			else
 				total_price += user_price;
-				//cout << user_price << endl;
-			}
-			cout << "total_price: " << total_price << " plus_cnt: " << plus_cnt << endl;
 		}
 		if (max_plus_cnt < plus_cnt) {
-			cout << "total_price: " << total_price << " plus_cnt: " << plus_cnt << endl;
 			max_plus_cnt = plus_cnt;
 			max_price = total_price;
 		}
 		else if (max_plus_cnt == plus_cnt) {
-			if (max_price < total_price) {
-				cout << "total_price: " << total_price << " plus_cnt: " << plus_cnt << endl;
+			if (max_price < total_price)
 				max_price = total_price;
-			}
 		}
 		return ;
 	}
