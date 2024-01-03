@@ -1,3 +1,5 @@
+package 주식가격;
+
 class Solution {
 	public int[] solution(int[] prices) {
 		int[] answer = new int[prices.length];

@@ -1,3 +1,4 @@
+package 땅따먹기;
 import java.util.Arrays;
 
 class Solution {

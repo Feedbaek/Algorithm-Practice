@@ -1,6 +1,6 @@
 {
 	"java.project.sourcePaths": [
-		"백준/바킹독/_tmp"
+		"프로그래머스/lv_2"
 	],
 	"files.associations": {
 		"*.html": "html",

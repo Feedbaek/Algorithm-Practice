@@ -1,3 +1,5 @@
+package 구명보트;
+
 import java.util.Arrays;
 
 class Solution {

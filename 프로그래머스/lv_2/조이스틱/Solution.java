@@ -1,3 +1,5 @@
+package 조이스틱;
+
 class Solution {
 	public StringBuilder sb;
 	public String name;
