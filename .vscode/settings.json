@@ -1,6 +1,7 @@
 {
 	"java.project.sourcePaths": [
-		"프로그래머스/lv_2"
+		"프로그래머스/lv_2",
+		"삼성"
 	],
 	"files.associations": {
 		"*.html": "html",

@@ -6,6 +6,20 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "AI의_반란_최후의_전쟁",
+			"request": "launch",
+			"mainClass": "AI의_반란_최후의_전쟁",
+			"projectName": "kote_study_8748a250"
+		},
+		{
+			"type": "java",
+			"name": "삼각김밥_월드",
+			"request": "launch",
+			"mainClass": "삼각김밥_월드",
+			"projectName": "kote_study_8748a250"
+		},
+		{
+			"type": "java",
 			"name": "Solution",
 			"request": "launch",
 			"mainClass": "_124나라의_숫자.Solution",
