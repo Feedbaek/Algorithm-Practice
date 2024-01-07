@@ -3,13 +3,13 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 
 public class AI의_반란_최후의_전쟁 {
 	static int minValue = Integer.MAX_VALUE;
 	static int agentA = -1;
 	static int agentB = -1;
 	static int agentC = -1;
+	static int[] arr;
 
 	public static void rec(boolean[] status, int[] agent, int[][] a, int[][] b, int[][] c) {
 		// 모든 능력치가 선택되었으면
@@ -21,14 +21,14 @@ public class AI의_반란_최후의_전쟁 {
 
 			for (int i=0; i<agent.length; ++i) {
 				if (agent[i] == 1) {
-					sum += a[i][0];
 					tmpA = i;
+					sum += a[i][0];
 				} else if (agent[i] == 2) {
-					sum += b[i][0];
 					tmpB = i;
+					sum += b[i][0];
 				} else if (agent[i] == 3) {
-					sum += c[i][0];
 					tmpC = i;
+					sum += c[i][0];
 				}
 			}
 			if (sum < minValue) {
@@ -44,7 +44,7 @@ public class AI의_반란_최후의_전쟁 {
 			// 선택되지 않은 능력치
 			if (!status[i]) {
 				status[i] = true;
-				// a 능력치 합이 가장 작은 요원을 찾는다.
+				// 능력치  가장 작은 요원을 찾는다.
 				if (i == 0) {
 					for (int j=0; j<a.length; ++j) {
 						int agentIndex = a[j][1];
@@ -89,41 +89,37 @@ public class AI의_반란_최후의_전쟁 {
 
 		for (int i=0; i<T; ++i) {
 			int answer = 0;
+			minValue = Integer.MAX_VALUE;
 			// 요원의 수
 			int n = Integer.parseInt(br.readLine());
 			// 각 능력치 별로 요원이 버리는 능력치의 합을 저장하는 배열
 			int[][] a = new int [n][2];
 			int[][] b = new int [n][2];
 			int[][] c = new int [n][2];
-			int[] arr = new int[n];
+			arr = new int[n];
 
 			for (int j=0; j<n; ++j) {
 				String[] input = br.readLine().split(" ");
-				a[j][0] = Integer.parseInt(input[1]) + Integer.parseInt(input[2]);
+				int statA = Integer.parseInt(input[0]); int statB = Integer.parseInt(input[1]); int statC = Integer.parseInt(input[2]);
+				int bigest = Math.max(statA, Math.max(statB, statC));
+				// 해당 능력치를 선택했을 때 손해보는 수치를 저장
+				a[j][0] = bigest - statA;
 				a[j][1] = j;
-				b[j][0] = Integer.parseInt(input[0]) + Integer.parseInt(input[2]);
+				b[j][0] = bigest - statB;
 				b[j][1] = j;
-				c[j][0] = Integer.parseInt(input[0]) + Integer.parseInt(input[1]);
+				c[j][0] = bigest - statC;
 				c[j][1] = j;
 
 				// 요원의 가장 높은 능력치를 제외하고 버리는 능력치의 합을 저장
-				arr[j] = Integer.parseInt(input[0]) + Integer.parseInt(input[1]) + Integer.parseInt(input[2])
-				 - Math.max(Integer.parseInt(input[0]), Math.max(Integer.parseInt(input[1]), Integer.parseInt(input[2])));
+				arr[j] = statA + statB + statC - bigest;
 			}
-			// 능력의 합을 기준으로 오름차순 정렬
-			Arrays.sort(a, (o1, o2) -> o1[0] - o2[0]);
-			Arrays.sort(b, (o1, o2) -> o1[0] - o2[0]);
-			Arrays.sort(c, (o1, o2) -> o1[0] - o2[0]);
 
 			rec(new boolean[3], new int[n], a, b, c);
 
-			answer += minValue;
-			minValue = Integer.MAX_VALUE;
+			answer = minValue;
 
 			for (int j=0; j<n; ++j) {
-				if (j != agentA && j != agentB && j != agentC) {
-					answer += arr[j];
-				}
+				answer += arr[j];
 			}
 
 			if (n < 3) {
