@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "교점에_별_만들기",
+			"request": "launch",
+			"mainClass": "교점에_별_만들기",
+			"projectName": "kote_study_48208f88"
+		},
+		{
+			"type": "java",
 			"name": "AI의_반란_최후의_전쟁",
 			"request": "launch",
 			"mainClass": "AI의_반란_최후의_전쟁",
