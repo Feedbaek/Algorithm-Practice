@@ -1,7 +1,9 @@
+package 교점에_별_만들기;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class 교점에_별_만들기 {
+public class Solution {
 
 	int[] findCrossPoint(long a, long b, long e, long c, long d, long f) {
 		int[] crossPoint = new int[2];

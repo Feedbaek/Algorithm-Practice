@@ -1,3 +1,5 @@
+package 택배_배달과_수거하기;
+
 class Solution {
 	public long solution(int cap, int n, int[] deliveries, int[] pickups) {
 		long answer = 0;
