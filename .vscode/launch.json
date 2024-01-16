@@ -6,6 +6,13 @@
 	"configurations": [
 		{
 			"type": "java",
+			"name": "Solution",
+			"request": "launch",
+			"mainClass": "유사_칸토어_비트열.Solution",
+			"projectName": "kote_study_48208f88"
+		},
+		{
+			"type": "java",
 			"name": "교점에_별_만들기",
 			"request": "launch",
 			"mainClass": "교점에_별_만들기",
