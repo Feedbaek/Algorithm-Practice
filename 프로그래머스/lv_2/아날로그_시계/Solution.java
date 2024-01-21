@@ -5,21 +5,59 @@ public class Solution {
 		int answer = 0;
 		int time1 = h1 * 3600 + m1 * 60 + s1;
 		int time2 = h2 * 3600 + m2 * 60 + s2;
+		boolean checkH = false;
+		boolean checkM = false;
+
 		for (int time=time1; time<=time2; time++) {
-			//int h = time / 720;
-			//int m = time % 3600;
+			int h = (time / 720) % 60;
+			int m = (time % 3600) / 60;
 			int s = time % 60;
-			int m = s * 60; // 초 단위로 분을 구함
-			int h = m * 12; // 초 단위로 시를 구함
-			if (time % (720 * 12) == h || time % 3600 == m) {
-				++answer;
+
+			if (h == s && m == s && s == 0) {
+				checkH = false;
 			}
-			//if (h == s || m == s) {
-			//	System.out.println(h + ":" + m + ":" + s);
-			//	++answer;
-			//}
+
+			if (checkH) {
+				answer++;
+				//System.out.println(h + " " + m + " " + s);
+				checkH = false;
+			}
+			if (checkM) {
+				answer++;
+				//System.out.println(h + " " + m + " " + s);
+				checkM = false;
+			}
+
+			if (h == s) {
+				checkH = true;
+				//System.out.print("1: ");
+				//System.out.println(h + " " + m + " " + s);
+			}
+			if (m == s) {
+				checkM = true;
+				//System.out.print("2: ");
+				//System.out.println(h + " " + m + " " + s);
+			}
+			if (h == s && m == s && s == 0) {
+				//System.out.print("3: ");
+				//System.out.println(h + " " + m + " " + s);
+				checkH = false;
+			}
+
 		}
+		//if (checkH) {
+		//	answer++;
+		//}
+		//if (checkM) {
+		//	answer++;
+		//}
 
 		return answer;
+	}
+
+	public static void main(String[] args) {
+		Solution s = new Solution();
+		// 11	58	59	11	59	0	1
+		System.out.println(s.solution(11, 58, 59, 11, 59, 0));
 	}
 }

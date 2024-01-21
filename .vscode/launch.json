@@ -8,6 +8,13 @@
 			"type": "java",
 			"name": "Solution",
 			"request": "launch",
+			"mainClass": "아날로그_시계.Solution",
+			"projectName": "kote_study_48208f88"
+		},
+		{
+			"type": "java",
+			"name": "Solution",
+			"request": "launch",
 			"mainClass": "유사_칸토어_비트열.Solution",
 			"projectName": "kote_study_48208f88"
 		},
