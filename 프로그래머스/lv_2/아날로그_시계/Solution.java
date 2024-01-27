@@ -13,51 +13,58 @@ public class Solution {
 			int m = (time % 3600) / 60;
 			int s = time % 60;
 
-			if (h == s && m == s && s == 0) {
+			if (m == s && s == 0) {  // 정각인 경우
+				++answer;
 				checkH = false;
+				checkM = false;
+				continue;
 			}
-
 			if (checkH) {
-				answer++;
-				//System.out.println(h + " " + m + " " + s);
+				++answer;
 				checkH = false;
 			}
 			if (checkM) {
-				answer++;
-				//System.out.println(h + " " + m + " " + s);
+				++answer;
 				checkM = false;
 			}
-
 			if (h == s) {
 				checkH = true;
-				//System.out.print("1: ");
-				//System.out.println(h + " " + m + " " + s);
 			}
 			if (m == s) {
 				checkM = true;
-				//System.out.print("2: ");
-				//System.out.println(h + " " + m + " " + s);
 			}
-			if (h == s && m == s && s == 0) {
-				//System.out.print("3: ");
-				//System.out.println(h + " " + m + " " + s);
-				checkH = false;
-			}
-
 		}
-		//if (checkH) {
-		//	answer++;
-		//}
-		//if (checkM) {
-		//	answer++;
-		//}
-
 		return answer;
 	}
 
 	public static void main(String[] args) {
 		Solution s = new Solution();
+		// 	0, 5, 30, 0, 7, 0
+		System.out.println("테스트 1");
+		System.out.println("2 vs " + s.solution(0, 5, 30, 0, 7, 0));
+		System.out.println();
+		// 12, 0, 0, 12, 0, 30
+		System.out.println("테스트 2");
+		System.out.println("1 vs " + s.solution(12, 0, 0, 12, 0, 30));
+		System.out.println();
+		// 0, 6, 1, 0, 6, 6
+		System.out.println("테스트 3");
+		System.out.println("0 vs " + s.solution(0, 6, 1, 0, 6, 6));
+		System.out.println();
+		// 11, 59, 30, 12, 0, 0
+		System.out.println("테스트 4");
+		System.out.println("1 vs " + s.solution(11, 59, 30, 12, 0, 0));
+		System.out.println();
 		// 11	58	59	11	59	0	1
-		System.out.println(s.solution(11, 58, 59, 11, 59, 0));
+		System.out.println("테스트 5");
+		System.out.println("1 vs " + s.solution(11, 58, 59, 11, 59, 0));
+		System.out.println();
+		// 	1, 5, 5, 1, 5, 6
+		System.out.println("테스트 6");
+		System.out.println("2 vs " + s.solution(1, 5, 5, 1, 5, 6));
+		System.out.println();
+		// 	0, 0, 0, 23, 59, 59
+		System.out.println("테스트 7");
+		System.out.println("2852 vs " + s.solution(0, 0, 0, 23, 59, 59));
 	}
 }
