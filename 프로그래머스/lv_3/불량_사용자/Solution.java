@@ -1,3 +1,5 @@
+package 불량_사용자;
+
 import java.util.HashSet;
 import java.util.Set;
 
