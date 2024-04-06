@@ -43,6 +43,7 @@ public class Solution {
 			direction[edge[i][0]].add(edge[i][1]);
 		}
 
+		// dfs가 아닌 dfs로 해결해야함
 		dfs(1, 0);
 
 		return answer;
