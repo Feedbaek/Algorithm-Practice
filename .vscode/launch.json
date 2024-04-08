@@ -8,6 +8,13 @@
 			"type": "java",
 			"name": "Solution",
 			"request": "launch",
+			"mainClass": "가장_먼_노드.Solution",
+			"projectName": "kote_study_48208f88"
+		},
+		{
+			"type": "java",
+			"name": "Solution",
+			"request": "launch",
 			"mainClass": "야근_지수.Solution",
 			"projectName": "kote_study_48208f88"
 		},
