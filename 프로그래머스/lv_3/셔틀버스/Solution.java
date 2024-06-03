@@ -33,59 +33,32 @@ class Solution {
 
 		int startTime = convertTimeToMinutes("09:00");
 		int endTime = startTime + ((n-1) * t);
-		int currentSize = 0;
+		int[] busSize = new int[n];
 		int busTime = startTime;
-		int currentRound = 0;
 		int lastCrewTime = 0;
-		int lastBusTime = endTime;
-		int ans = endTime;
-		for (int crewTime : crewTimeTable) {
-			// 버스 탑승 시작
-			if (busTime < crewTime) {  // 시간 지나서 다음 버스 타야 함
-				while (busTime < crewTime) {
-					++currentRound;
-					busTime += t;
-					if (currentRound == n || busTime > endTime) {
-						break;
-					}
-					lastBusTime = busTime;
-					lastCrewTime = busTime;
-					currentSize = 0;
-				}
-				//currentRound += (crewTime - busTime) / t + 1;
-				//busTime += ((crewTime - busTime) / t + 1) * t;
-				if (currentRound >= n || busTime > endTime) {  // 막차였다면
-					if (currentSize == m) {  // 인원이 가득 찼다면
-						ans = lastCrewTime - 1;
-					} else {  // 가득찬게 아니였다면
-						ans = lastBusTime;
-					}
-					break;
-				}
-				currentSize = 1;
-			} else {  // 오는 버스 탈 수 있음
-				if (currentSize < m) {  // 탑승
-					++currentSize;
-				} else {  // 만석이라 다음 버스 타야 함
-					currentRound += (crewTime - busTime) / t + 1;
-					busTime += ((crewTime - busTime) / t + 1) * t;
-					if (currentRound >= n || busTime > endTime) {  // 막차였다면
-						ans = lastCrewTime - 1;
-						break;
-					}
-					currentSize = 1;
-				}
+		int busIdx = 0;
+		int ans = 0;
+
+		for (int i=0; i<crewTimeTable.length && busIdx < n; ) {
+			// 버스 시간을 맞춤
+			while (busTime < crewTimeTable[i] || (busIdx < n && busSize[busIdx] == m)) {
+				busTime += t;
+				busIdx += 1;
 			}
-			lastBusTime = busTime;
-			lastCrewTime = crewTime;
+			// 탑승 승객을 맞춤
+			while (busIdx < n && busSize[busIdx] < m && i<crewTimeTable.length && crewTimeTable[i] <= busTime) {
+				busSize[busIdx] += 1;
+				lastCrewTime = crewTimeTable[i];
+				++i;
+			}
 		}
 
-		if (busTime <= endTime) {  // 모든 크루가 탑승한 경우
+		if (busSize[n-1] < m) {
 			ans = endTime;
-			if (busTime == endTime && currentSize == m) {
-				ans = lastCrewTime - 1;
-			}
+		} else {
+			ans = lastCrewTime - 1;
 		}
+
 		//  문자열로 시간을 바꿔서 반환
 		return convertMinutesToTime(ans);
 	}
